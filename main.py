@@ -34,14 +34,22 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        if pygame.key.get_pressed()[pygame.K_q]:
+            return
 
         pygame.Surface.fill(screen, (0, 0, 0))
         for u in updatable:
             u.update(dt)
+
         for a in asteroids:
             if a.check_collision(player):
                 print("Game over!")
                 return
+            for s in shots:
+                if a.check_collision(s):
+                    s.kill()
+                    a.kill()
+
         for d in drawable:
             d.draw(screen)
         pygame.display.flip()
