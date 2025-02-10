@@ -5,6 +5,7 @@ from player import *
 from asteroidfield import *
 from shot import *
 from score import *
+from gameover import *
 
 
 def main():
@@ -28,6 +29,7 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
     score = Score()
+    state = STATE_RUNNING
 
     clock = pygame.time.Clock()
     dt = 0.0
@@ -36,33 +38,48 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        if pygame.key.get_pressed()[pygame.K_q]:
+
+        if (
+            pygame.key.get_pressed()[pygame.K_q]
+            or pygame.key.get_pressed()[pygame.K_ESCAPE]
+        ):
             return
 
-        pygame.Surface.fill(screen, (0, 0, 0))
+        if state != STATE_GAMEOVER and pygame.key.get_pressed()[pygame.K_p]:
+            if state == STATE_RUNNING:
+                state = STATE_PAUSED
+            else:
+                state = STATE_RUNNING
 
-        for u in updatable:
-            u.update(dt)
+        if state == STATE_RUNNING:
+            pygame.Surface.fill(screen, (0, 0, 0))
 
-        for a in asteroids:
-            if a.check_collision(player):
-                print("Game over!")
-                return
-            for s in shots:
-                if a.check_collision(s):
-                    s.kill()
-                    a.split()
-                    score.update()
+            for u in updatable:
+                u.update(dt)
 
-        for d in drawable:
-            d.draw(screen)
+            for a in asteroids:
+                if a.check_collision(player):
+                    state = STATE_GAMEOVER
+                for s in shots:
+                    if a.check_collision(s):
+                        s.kill()
+                        a.split()
+                        score.update()
 
-        score.draw(screen)
+            for d in drawable:
+                d.draw(screen)
+
+            score.draw(screen)
+
+        elif state == STATE_GAMEOVER:
+            break
 
         pygame.display.flip()
         dt = clock.tick(60) * 0.001
 
+    gameover = GameOver()
+    gameover.show(screen, score.get_score(), clock)
+
 
 if __name__ == "__main__":
     main()
-    print("Exiting...")

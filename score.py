@@ -13,3 +13,6 @@ class Score:
 
     def update(self):
         self.score += 20
+
+    def get_score(self):
+        return self.score
