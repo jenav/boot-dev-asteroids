@@ -33,6 +33,7 @@ def main():
 
     clock = pygame.time.Clock()
     dt = 0.0
+    paused_timer = 0.0
 
     while True:
         for event in pygame.event.get():
@@ -45,7 +46,13 @@ def main():
         ):
             return
 
-        if state != STATE_GAMEOVER and pygame.key.get_pressed()[pygame.K_p]:
+        if paused_timer > 0:
+            paused_timer -= dt
+            if paused_timer < 0:
+                paused_timer = 0
+
+        if pygame.key.get_pressed()[pygame.K_p] and paused_timer == 0:
+            paused_timer = 0.2
             if state == STATE_RUNNING:
                 state = STATE_PAUSED
             else:
