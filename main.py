@@ -4,6 +4,7 @@ from circleshape import *
 from player import *
 from asteroidfield import *
 from shot import *
+from score import *
 
 
 def main():
@@ -26,6 +27,7 @@ def main():
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
+    score = Score()
 
     clock = pygame.time.Clock()
     dt = 0.0
@@ -50,9 +52,12 @@ def main():
                 if a.check_collision(s):
                     s.kill()
                     a.split()
+                    score.update()
 
         for d in drawable:
             d.draw(screen)
+
+        score.draw(screen)
 
         pygame.display.flip()
         dt = clock.tick(60) * 0.001
