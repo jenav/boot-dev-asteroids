@@ -8,9 +8,13 @@ class Score:
         self.score_text = f"Score: {self.score}"
         self.font = pygame.font.SysFont(SCORE_FONT, SCORE_SIZE)
 
-    def draw(self, screen):
-        text_surface = self.font.render(self.score_text, True, SCORE_COLOR)
-        screen.blit(text_surface, SCORE_POSITION)
+    def draw(self, screen, state):
+        if state == STATE_RUNNING:
+            text_surface = self.font.render(self.score_text, True, SCORE_COLOR)
+            screen.blit(text_surface, SCORE_POSITION)
+        if state == STATE_PAUSED:
+            text_surface = self.font.render("PAUSED", True, SCORE_COLOR)
+            screen.blit(text_surface, SCORE_POSITION)
 
     def update(self):
         self.score += 20

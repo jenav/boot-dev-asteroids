@@ -51,28 +51,29 @@ def main():
             else:
                 state = STATE_RUNNING
 
-        if state == STATE_RUNNING:
-            pygame.Surface.fill(screen, (0, 0, 0))
+        pygame.Surface.fill(screen, (0, 0, 0))
 
+        if state == STATE_RUNNING:
             for u in updatable:
                 u.update(dt)
 
             for a in asteroids:
                 if a.check_collision(player):
                     state = STATE_GAMEOVER
+                    break
                 for s in shots:
                     if a.check_collision(s):
                         s.kill()
                         a.split()
                         score.update()
 
-            for d in drawable:
-                d.draw(screen)
-
-            score.draw(screen)
-
         elif state == STATE_GAMEOVER:
             break
+
+        for d in drawable:
+            d.draw(screen)
+
+        score.draw(screen, state)
 
         pygame.display.flip()
         dt = clock.tick(60) * 0.001
