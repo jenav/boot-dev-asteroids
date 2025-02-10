@@ -1,4 +1,5 @@
 import pygame
+from constants import *
 
 
 # Base class for game objects
@@ -27,3 +28,15 @@ class CircleShape(pygame.sprite.Sprite):
         if distance < (self.radius + other.radius):
             return True
         return False
+
+    def should_kill_myself(self):
+        if (
+            self.position.x > SCREEN_WIDTH + ASTEROID_MAX_RADIUS
+            or self.position.x < -ASTEROID_MAX_RADIUS
+        ):
+            self.kill()
+        elif (
+            self.position.y > SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
+            or self.position.y < -ASTEROID_MAX_RADIUS
+        ):
+            self.kill()

@@ -38,6 +38,7 @@ def main():
             return
 
         pygame.Surface.fill(screen, (0, 0, 0))
+
         for u in updatable:
             u.update(dt)
 
@@ -52,6 +53,7 @@ def main():
 
         for d in drawable:
             d.draw(screen)
+
         pygame.display.flip()
         dt = clock.tick(60) * 0.001
 
