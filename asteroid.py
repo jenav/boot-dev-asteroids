@@ -5,10 +5,22 @@ from constants import *
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
+        if radius == ASTEROID_MAX_RADIUS:
+            self.img = pygame.image.load("img/big-circle.png").convert_alpha()
+        elif radius == (ASTEROID_MAX_RADIUS - ASTEROID_MIN_RADIUS):
+            self.img = pygame.image.load("img/medium-circle.png").convert_alpha()
+        else:
+            self.img = pygame.image.load("img/small-circle.png").convert_alpha()
+
         super().__init__(x, y, radius)
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, 2)
+        # pygame.draw.circle(screen, "white", self.position, self.radius, 2)
+        screen.blit(
+            self.img,
+            (self.position.x - self.radius, self.position.y - self.radius),
+        )
+        pygame.draw.circle(screen, (200, 200, 200), self.position, self.radius, 1)
 
     def update(self, dt):
         self.position += self.velocity * dt
