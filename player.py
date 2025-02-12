@@ -1,15 +1,21 @@
+import random
 from constants import *
 from circleshape import *
 from shot import *
+from lives import *
 
 
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shoot_count = 0
         self.shoot_timer = 0
         self.shoot_sound = pygame.mixer.Sound("sounds/por.mp3")
         self.shoot_sound.set_volume(0.6)
+        self.hit_sound = pygame.mixer.Sound("sounds/hit.mp3")
+        self.lives = Lives()
+        self.color = PLAYER_COLORS[self.lives.get_lives() - 1]
 
     # in the player class
     def triangle(self):
@@ -21,7 +27,8 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen):
-        pygame.draw.polygon(screen, PLAYER_COLOR, self.triangle(), 2)
+        pygame.draw.polygon(screen, self.color, self.triangle(), 2)
+        self.lives.draw(screen)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -51,7 +58,23 @@ class Player(CircleShape):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_sound.play()
+
+        self.shoot_count += 1
+        if self.shoot_count % random.randint(18, 60) == 0:
+            self.shoot_sound.play()
+            self.shoot_count = 0
+
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN
-        shot = Shot(self.triangle()[0])
+        shot = Shot(self.triangle()[0], self.color)
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
+
+    def set_color(self):
+        self.color = PLAYER_COLORS[self.lives.get_lives() - 1]
+
+    def get_hit(self):
+        self.hit_sound.play()
+        self.lives.akshually()
+        self.set_color()
+
+    def is_alive(self):
+        return self.lives.get_lives() > 0

@@ -12,7 +12,7 @@ class Score:
         if state == STATE_RUNNING:
             text_surface = self.font.render(self.score_text, True, SCORE_COLOR)
             screen.blit(text_surface, SCORE_POSITION)
-        if state == STATE_PAUSED:
+        elif state == STATE_PAUSED:
             text_surface = self.font.render("PAUSED", True, SCORE_COLOR)
             screen.blit(text_surface, SCORE_POSITION)
 
