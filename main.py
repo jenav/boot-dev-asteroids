@@ -16,6 +16,13 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # Load background music
+    pygame.mixer.music.load("sounds/background.mp3")
+    pygame.mixer.music.play(-1, 0.0)
+
+    # Load hit sound effect (roblox)
+    hit_sound = pygame.mixer.Sound("sounds/hit.mp3")
+
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -66,6 +73,7 @@ def main():
 
             for a in asteroids:
                 if a.check_collision(player):
+                    hit_sound.play()
                     state = STATE_GAMEOVER
                     break
                 for s in shots:
@@ -85,8 +93,12 @@ def main():
         pygame.display.flip()
         dt = clock.tick(60) * 0.001
 
-    gameover = GameOver()
-    gameover.show(screen, score.get_score(), clock)
+    pygame.time.delay(DELAY_AFTER_DEATH)
+    pygame.mixer.music.stop()
+    go = GameOver()
+    go_sound = pygame.mixer.Sound("sounds/gameover.mp3")
+    go_sound.play()
+    go.show(screen, score.get_score(), clock)
 
 
 if __name__ == "__main__":

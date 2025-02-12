@@ -11,7 +11,7 @@ class Asteroid(CircleShape):
 
         if not Asteroid.asteroid_images[img_index]:
             Asteroid.asteroid_images[img_index] = pygame.image.load(
-                f"img/asteroid-{img_index}.png"
+                f"images/asteroid-{img_index}.png"
             ).convert_alpha()
 
         self.img = Asteroid.asteroid_images[img_index]
