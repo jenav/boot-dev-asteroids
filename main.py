@@ -18,6 +18,7 @@ def main():
 
     # Load background music
     pygame.mixer.music.load("sounds/background.mp3")
+    pygame.mixer.music.set_volume(0.7)
     pygame.mixer.music.play(-1, 0.0)
 
     # Load hit sound effect (roblox)
