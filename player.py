@@ -62,7 +62,7 @@ class Player(CircleShape):
             return
 
         self.shoot_count += 1
-        if self.shoot_count % random.randint(18, 60) == 0:
+        if self.shoot_count % random.randint(30, 60) == 0:
             self.shoot_sound.play()
             self.shoot_count = 0
 
