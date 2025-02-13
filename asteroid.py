@@ -7,6 +7,8 @@ class Asteroid(CircleShape):
     asteroid_images = [None, None, None]
 
     def __init__(self, x, y, radius):
+        super().__init__(x, y, radius)
+
         img_index = (radius // ASTEROID_MIN_RADIUS) - 1
 
         if not Asteroid.asteroid_images[img_index]:
@@ -15,7 +17,6 @@ class Asteroid(CircleShape):
             ).convert_alpha()
 
         self.img = Asteroid.asteroid_images[img_index]
-        super().__init__(x, y, radius)
 
     def draw(self, screen):
         # pygame.draw.circle(screen, "white", self.position, self.radius, 2)

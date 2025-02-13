@@ -28,6 +28,8 @@ class Player(CircleShape):
 
     def draw(self, screen):
         pygame.draw.polygon(screen, self.color, self.triangle(), 2)
+
+    def draw_lives(self, screen):
         self.lives.draw(screen)
 
     def rotate(self, dt):

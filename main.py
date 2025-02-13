@@ -100,6 +100,7 @@ def main():
             d.draw(screen)
 
         score.draw(screen, state)
+        player.draw_lives(screen)
 
         pygame.display.flip()
         dt = clock.tick(60) * 0.001

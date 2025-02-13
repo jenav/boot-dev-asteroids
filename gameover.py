@@ -6,12 +6,29 @@ class GameOver:
     def __init__(self):
         self.gameover_font = pygame.font.SysFont(GAMEOVER_FONT, GAMEOVER_SIZE)
         self.score_font = pygame.font.SysFont(GAMEOVER_FONT, GAMEOVER_SIZE // 2)
+        self.final_boss_img = pygame.image.load(
+            f"images/final-boss.png"
+        ).convert_alpha()
 
     def show(self, screen, score, game_clock):
         pygame.Surface.fill(screen, (20, 20, 20))
+
         gameover_surface = self.gameover_font.render("GAME OVER", True, GAMEOVER_COLOR)
         gameover_width = gameover_surface.get_width()
         gameover_height = gameover_surface.get_height()
+
+        # render image first to set it in the background
+        screen.blit(
+            self.final_boss_img,
+            (
+                SCREEN_WIDTH / 2
+                + gameover_width / 2
+                - self.final_boss_img.get_width() / 2
+                + 5,
+                SCREEN_HEIGHT - self.final_boss_img.get_height() - 10,
+            ),
+        )
+
         screen.blit(
             gameover_surface,
             (
