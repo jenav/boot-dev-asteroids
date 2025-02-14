@@ -11,28 +11,27 @@ from score import *
 from gameover import *
 from helpers import *
 
-pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Caquero Slayer")
-
-# Load background music
-pygame.mixer.music.load("sounds/background.mp3")
-pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play(-1, 0.0)
-# Keep this dict small
-ctx = {
-    "game_state": STATE_RUNNING,
-    "music_state": MUSIC_PLAYING,
-    "key_press_timer": 0.0,
-    "pause_timer": 0.0,
-}
-
 
 def main():
-    global ctx
-
     print("Starting Caquero Slayer!")
     print(f"Screen size: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Caquero Slayer")
+
+    # Load background music
+    pygame.mixer.music.load("sounds/background.mp3")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1, 0.0)
+
+    # Keep this dict small
+    ctx = {
+        "game_state": STATE_RUNNING,
+        "music_state": MUSIC_PLAYING,
+        "key_press_timer": 0.0,
+        "pause_timer": 0.0,
+    }
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -63,7 +62,7 @@ def main():
 
         hlp_handle_keys(pygame.key.get_pressed(), ctx)
 
-        # Timer de pausado temporal
+        # timer de pausado temporal
         if ctx["pause_timer"] > 0:
             ctx["pause_timer"] -= dt
             if ctx["pause_timer"] <= 0:
