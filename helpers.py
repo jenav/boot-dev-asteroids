@@ -13,7 +13,8 @@ def hlp_handle_keys(keys_pressed, ctx):
             pygame.mixer.music.pause()
         else:
             ctx["game_state"] = STATE_RUNNING
-            pygame.mixer.music.unpause()
+            if ctx["music_state"] == MUSIC_PLAYING:
+                pygame.mixer.music.unpause()
 
     if keys_pressed[pygame.K_m] and ctx["key_press_timer"] <= 0:
         ctx["key_press_timer"] = 0.2

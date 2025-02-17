@@ -9,12 +9,15 @@ from asteroidfield import *
 from shot import *
 from score import *
 from gameover import *
-from helpers import *
+from helpers import hlp_handle_keys
 
 
 def main():
     print("Starting Caquero Slayer!")
     print(f"Screen size: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+    print(
+        "Controls:\n\tSPACE = shoot\n\tP = pause/resume\n\tM = pause/resume background music\n\tESC/Q = Exit"
+    )
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
